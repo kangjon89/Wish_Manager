@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>The Wishing App</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+</head>
+<body>
+
+    <h1>Hello {{current_user.first_name}}!</h1>
+    <a  href='/logout'>Logout</a>
+    <br><br>
+    <form action="/new" method="POST">
+        {% csrf_token %}
+        <button type='submit'>Make a Wish!</button>
+    </form>
+
+    <h3>Your wish list:</h3>
+
+    <table id="t01">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Date added</th>
+                <th>Actions</th>
+                </tr>
+        </thead>
+        <tbody>
+        {% for wish in wishes %}
+            {% if current_user.id == wish.creator.id %} 
+                {% if not wish.granted %} 
+            <tr>
+                <td>{{wish.item}}</td>
+                <td>{{wish.created_at}}</td>
+                <td>
+                    <a href="/remove/{{wish.id}}">Remove  |</a>
+                    <a href="/edit/{{wish.id}}">Edit  |</a>
+                    <a href="/granted/{{wish.id}}">Granted!</a>
+                </td>
+                </tr>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Granted Wishes:</h3>
+
+    <table id="t02">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Wisher</th>
+                <th>Date added</th>
+                <th>Date Granted</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for wish in wishes %}
+            {% if current_user.id == wish.creator.id %}
+                {% if wish.granted %}
+            <tr>
+                <td>{{wish.item}}</td>
+                <td>{{current_user.first_name}}</td>
+                <td>{{wish.created_at}}</td>
+                <td>{{wish.updated_at}}</td>
+                </tr>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+
+<!-- BELT PROMPT -->
+<!-- Dashboard
+Dashboard should say "Hello {{user}}"
+Display all the wishes the logged user made that have not yet been granted in the top table
+Each wish in the top table should have the remove, edit, and granted links
+Display all the granted wishes and the users who made them in the bottom table
+Display when the granted wishes were made and when they were granted
+Clicking the granted link removes the wish from the top table and places it in the bottom table
+Make a wish
+Validations for empty input fields
+Minimum length of three characters for the item and the description
+Display errors with flash messages
+Redirect back to the dashboard after making a wish or clicking the cancel button
+The newly made wish should appear in the top table on the dashboard
+Edit a wish
+Same validations apply as when creating a wish
+Redirect back to the dashboard after editing
+The dashboard should show the changes made to the wish
+Remove a wish
+Clicking the Remove link removes the wish from the database
+HTML and CSS reflect the wireframe to at least 75% accuracy -->

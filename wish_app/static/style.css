@@ -1,0 +1,25 @@
+*{
+    background-color: lightblue;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+table, th, td {
+    border: 1px solid black;
+    padding: 5px;
+    text-align: center;
+  }
+
+table {
+    border-spacing: 15px;
+    width: 100%;
+}
+
+table#t01 {
+    width: 100%;    
+    background-color: #ff8383;
+  }
+
+table#t02 {
+    width: 100%;    
+    background-color: #b1ffa4;
+  }

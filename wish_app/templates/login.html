@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>The Wishing App</title>    
+    
+<style>
+*{
+    font-family: sans-serif;
+}
+.register{
+    vertical-align: top;
+    display: inline-block;
+    height: 450px;
+    width: 300px;
+    background-color: lightblue;
+    padding: 15px;
+}
+.login{
+    vertical-align: top;
+    display: inline-block;
+    height: 450px;
+    width: 300px;
+    background-color: lightblue;
+    padding: 15px;
+}
+.space{
+    margin: 10px;
+}
+input{
+    display: block;
+    margin: 5px;
+    font-size: 10pt;
+} 
+</style>
+
+</head>
+<body>
+    <div class="wrapper">
+        <p><h1 class="welcome">WELCOME! Sign in to make a wish!</h1></p>
+
+        <!-- validation errors -->
+            {% if messages %}
+            <ul>
+                {% for message in messages %}
+                <li>{{ message }}</li>    
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+        <div class="register">
+            <p><h3>Register if you are a new user!</h3></p>
+            <form method=POST action='register'>
+                {% csrf_token %}
+                First Name: <input type='text' name='first_name'>               
+                <br>
+                Last Name: <input type='text' name='last_name'><br>
+                Email: <input type='text' name='email'><br>
+                Password: <input type='password' name='password'><br>
+                Confirm Password: <input type='password' name='confirm_password'><br>
+                <input type='submit' value='Register!'>
+            </form>
+        </div>
+        <div class="login">
+            <form action="login" method="POST">
+                {% csrf_token %}
+                <h3>Login!</h3>
+                Email:<input type='text' name='email'><br>
+                Password:<input type='password' name='password'><br>
+                <input type="submit" value="Log In!"><br>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
